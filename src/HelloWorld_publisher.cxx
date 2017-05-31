@@ -178,7 +178,9 @@ extern "C" int publisher_main(int domainId, int sample_count)
     instance_handle = HelloWorld_writer->register_instance(*instance);
     */
 	
+    //define serial port to use
     std::string port("/dev/ttyACM0");
+    //define baud rate to use
     unsigned long baud = 115200;
 
     serial::Serial my_serial(port, baud, serial::Timeout::simpleTimeout(100));
@@ -186,16 +188,20 @@ extern "C" int publisher_main(int domainId, int sample_count)
     /* Main loop */
     for (count=0; (sample_count == 0) || (count < sample_count); ++count) {
 
+        //tell the micro-controller you want to grab the data
     	my_serial.write("+");
+        //parse the data sent from the micro-controller
     	std::string parsed_data = my_serial.readline();
         
+        //just some debugging prints
         std::cout << parsed_data << std::endl;
         
-        // std::string into a char*
+        //convert std::string into a char* since the library supports std::string and rti doesn't
         parsed_data = parsed_data.c_str();
         char *conv_parsed_data = new char[parsed_data.length() + 1];
         strcpy(conv_parsed_data, parsed_data.c_str());
         
+        //publish the parased data from the serial port
         instance->msg = conv_parsed_data;
         retcode = HelloWorld_writer->write(*instance, instance_handle);
         if (retcode != DDS_RETCODE_OK) {
