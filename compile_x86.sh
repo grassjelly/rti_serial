@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 rm -rf src/objs
 cd src
-make -f app_makefile
+make -f app_makefile_x86

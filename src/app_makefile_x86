@@ -3,4 +3,4 @@ WORKING_DIR = $(shell pwd)/..
 INCLUDES = -I$(WORKING_DIR)/lib/serial
 COMMONSOURCES = $(WORKING_DIR)/lib/serial/serial.cc $(WORKING_DIR)/lib/serial/unix.cc $(WORKING_DIR)/lib/serial/list_ports_linux.cc 
 
-include ../src/make*
+include ../src/makefile_HelloWorld_x64Linux3gcc4.8.2
